@@ -7,6 +7,7 @@ package lab4_herencia_abstract;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,97 +20,101 @@ import javax.swing.SwingConstants;
  */
 public class JuegoAhorcadoFijo extends JuegoAhorcadoBase {
 
+   private static final String[] PALABRAS_FIJAS = {"programacion", "desarrollo", "carro", "perro"};
     private JFrame frame;
-    private JLabel labelPalabra;
-    private JLabel labelIntentos;
-    private JTextField textField;
-    private JButton buttonEnviar;
-    private JLabel labelMensaje;
-
-    public JuegoAhorcadoFijo(String palabraFija) {
-        palabraSecreta = palabraFija.toLowerCase();
+    private JLabel etiquetaPalabra;
+    private JLabel etiquetaIntentos;
+    private JTextField campoTexto;
+    private JButton botonEnviar;
+    private JLabel etiquetaMensaje;
+    
+    public JuegoAhorcadoFijo() {
+        int indice = new Random().nextInt(PALABRAS_FIJAS.length);
+        palabraSecreta = PALABRAS_FIJAS[indice].toLowerCase();
         inicializarPalabraSecreta();
     }
-
+    
     @Override
     public void inicializarPalabraSecreta() {
-        StringBuilder datos = new StringBuilder();
+        StringBuilder cadenaFinal = new StringBuilder();
         for (int i = 0; i < palabraSecreta.length(); i++) {
             if (Character.isLetter(palabraSecreta.charAt(i))) {
-                datos.append("_");
+                cadenaFinal.append("_");
             } else {
-                datos.append(palabraSecreta.charAt(i));
+                cadenaFinal.append(palabraSecreta.charAt(i));
             }
         }
-        palabraActual = datos.toString();
+        palabraActual = cadenaFinal.toString();
     }
-
+    
     @Override
     public void jugar() {
         frame = new JFrame("Ahorcado Fijo");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(400, 200);
         frame.setLayout(new GridLayout(5, 1));
-        labelPalabra = new JLabel("Palabra: " + palabraActual, SwingConstants.CENTER);
-        labelIntentos = new JLabel("Intentos restantes: " + intentos, SwingConstants.CENTER);
-        textField = new JTextField();
-        buttonEnviar = new JButton("Enviar");
-        labelMensaje = new JLabel("", SwingConstants.CENTER);
-        buttonEnviar.addActionListener(new ActionListener() {
+        etiquetaPalabra = new JLabel("Palabra: " + palabraActual, SwingConstants.CENTER);
+        etiquetaIntentos = new JLabel("Intentos restantes: " + intentos, SwingConstants.CENTER);
+        campoTexto = new JTextField();
+        botonEnviar = new JButton("Enviar");
+        etiquetaMensaje = new JLabel("", SwingConstants.CENTER);
+        
+        botonEnviar.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                String entrada = textField.getText().toLowerCase();
+                String entrada = campoTexto.getText().toLowerCase();
                 if (entrada.length() > 0) {
                     char letra = entrada.charAt(0);
                     if (verificarLetra(letra)) {
                         actualizarPalabraActual(letra);
-                        labelMensaje.setText("Letra correcta");
+                        etiquetaMensaje.setText("La letra ingresada es correcta");
                     } else {
                         intentos--;
-                        labelMensaje.setText("Letra incorrecta");
+                        etiquetaMensaje.setText("La letra ingresada no es correcta");
                     }
-                    labelPalabra.setText("Palabra: " + palabraActual);
-                    labelIntentos.setText("Intentos restantes: " + intentos);
-                    textField.setText("");
+                    etiquetaPalabra.setText("Palabra: " + palabraActual);
+                    etiquetaIntentos.setText("Intentos restantes: " + intentos);
+                    campoTexto.setText("");
                     if (hasGanado()) {
-                        labelMensaje.setText("Ganaste la palabra era: " + palabraSecreta);
-                        buttonEnviar.setEnabled(false);
+                        etiquetaMensaje.setText("Felicidades, ha ganado. La palabra era: " + palabraSecreta);
+                        botonEnviar.setEnabled(false);
                     } else if (intentos == 0) {
-                        labelMensaje.setText("Perdiste la palabra era: " + palabraSecreta);
-                        buttonEnviar.setEnabled(false);
+                        etiquetaMensaje.setText("Lo siento, ha perdido. La palabra era: " + palabraSecreta);
+                        botonEnviar.setEnabled(false);
                     }
                 }
             }
         });
-        frame.add(labelPalabra);
-        frame.add(labelIntentos);
-        frame.add(textField);
-        frame.add(buttonEnviar);
-        frame.add(labelMensaje);
+        
+        frame.add(etiquetaPalabra);
+        frame.add(etiquetaIntentos);
+        frame.add(campoTexto);
+        frame.add(botonEnviar);
+        frame.add(etiquetaMensaje);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-
+    
     @Override
     public void actualizarPalabraActual(char letra) {
-        StringBuilder datos = new StringBuilder();
+        StringBuilder cadenaFinal = new StringBuilder();
         for (int i = 0; i < palabraSecreta.length(); i++) {
             if (palabraSecreta.charAt(i) == letra) {
-                datos.append(letra);
+                cadenaFinal.append(letra);
             } else {
-                datos.append(palabraActual.charAt(i));
+                cadenaFinal.append(palabraActual.charAt(i));
             }
         }
-        palabraActual = datos.toString();
+        palabraActual = cadenaFinal.toString();
     }
-
+    
     @Override
     public boolean verificarLetra(char letra) {
         return palabraSecreta.indexOf(letra) >= 0;
     }
-
+    
     @Override
     public boolean hasGanado() {
         return !palabraActual.contains("_");
     }
-
+    
 }
