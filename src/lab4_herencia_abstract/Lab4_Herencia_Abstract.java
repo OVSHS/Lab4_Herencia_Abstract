@@ -29,19 +29,19 @@ public class Lab4_Herencia_Abstract {
     }
     
     private static void crearMenuPrincipal() {
-        JFrame menuFrame = new JFrame("Menú del Ahorcado");
+        JFrame menuFrame = new JFrame("Menu del Ahorcado");
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menuFrame.setSize(300, 200);
         menuFrame.setLayout(new GridLayout(4, 1));
         
-        JLabel etiquetaTitulo = new JLabel("Seleccione una opción", SwingConstants.CENTER);
+        JLabel etiquetaTitulo = new JLabel("Seleccione una opcion", SwingConstants.CENTER);
         JButton botonJuegoFijo = new JButton("Juego Fijo");
         JButton botonJuegoAzar = new JButton("Juego Azar");
         JButton botonAgregarPalabras = new JButton("Agregar Palabras Secretas");
         
         botonJuegoFijo.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                // Ahora se crea sin pasar palabra fija, ya que selecciona una de 4 aleatorias.
+               
                 JuegoAhorcado juegoFijo = new JuegoAhorcadoFijo();
                 juegoFijo.jugar();
             }
@@ -50,7 +50,7 @@ public class Lab4_Herencia_Abstract {
         botonJuegoAzar.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 if(admin.getCantidadPalabras() == 0) {
-                    JOptionPane.showMessageDialog(null, "No se han agregado palabras. Se usará la palabra predeterminada.");
+                    JOptionPane.showMessageDialog(null, "No se han agregado palabras,se usara la palabra predeterminada");
                 }
                 JuegoAhorcado juegoAzar = new JuegoAhorcadoAzar(admin);
                 juegoAzar.jugar();
