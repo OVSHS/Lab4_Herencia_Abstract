@@ -9,22 +9,19 @@ package lab4_herencia_abstract;
  * @author Mario
  */
 public abstract class JuegoAhorcadoBase implements JuegoAhorcado {
-   
-     protected String palabraSecreta;
+
+    protected String palabraSecreta;
     protected String palabraActual;
     protected int intentos;
 
-    public JuegoAhorcadoBase(String palabraSecreta, int intentos) {
-        this.palabraSecreta = palabraSecreta;
-        this.intentos = intentos;
-        this.palabraActual = inicializarPalabraActual();
-    }
+    public JuegoAhorcadoBase() {
 
-    private String inicializarPalabraActual() {
-        return palabraSecreta.replaceAll(".", "_");
+        this.intentos = 6;
     }
 
     public abstract void actualizarPalabraActual(char letra);
+
     public abstract boolean verificarLetra(char letra);
+
     public abstract boolean hasGanado();
 }
