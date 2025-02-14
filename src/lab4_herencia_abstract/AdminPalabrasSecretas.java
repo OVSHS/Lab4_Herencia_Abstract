@@ -22,10 +22,10 @@ public class AdminPalabrasSecretas {
     }
     
     public void agregarPalabra(String palabra) {
-        if (palabra != null && !palabra.isEmpty()) {
-            if (count >= palabras.length) {
+        if(palabra != null && !palabra.isEmpty()) {
+            if(count >= palabras.length) {
                 String[] nuevo = new String[palabras.length * 2];
-                for (int i = 0; i < palabras.length; i++) {
+                for(int i = 0; i < palabras.length; i++){
                     nuevo[i] = palabras[i];
                 }
                 palabras = nuevo;
@@ -36,10 +36,14 @@ public class AdminPalabrasSecretas {
     }
     
     public String seleccionarPalabraAlAzar() {
-        if (count == 0) {
+        if(count == 0) {
             return "default";
         }
         int indice = random.nextInt(count);
         return palabras[indice];
+    }
+    
+    public int getCantidadPalabras() {
+        return count;
     }
 }
